@@ -158,6 +158,7 @@ if err != nil {
 }
 ```
 And do not forget **Rate Limiting** strategies, one of good libraries is **golang.org/x/time/rate** or using **Nginx** as reverse proxy.
+
 3. **Use background processing for file uploads** : If you are dealing with large media files, consider offloading file processing (e.g., storing media files, generating thumbnails) to background jobs. I can use **Go channels**, **goroutines**, or utelizing distributed messaging system like **Kafka** or **RabbitMQ** . also use a dedicated background job system **Goraft/Work & Redis** can be a solution.
 
 4. **Add some extra helpful fuctionalities**: Add **update** `e.g. : PUT /tags/:id` and **delete** `e.g. : DELETE /tags/:id` functionalities for tags and media can extend the usefulness. something like these functions:
