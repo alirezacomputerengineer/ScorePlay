@@ -41,7 +41,7 @@ myapp/
 
 ### Initialize The Project
 
-Download or clone code base(I named the project [text](myapp)), navigate to the main folder and run these commands.
+Download or clone code base(I named the project `myapp`), navigate to the main folder and run these commands.
 
 ```bash
 go mod init myapp
@@ -102,7 +102,7 @@ go test ./...
 ## Future Improvements
 As I mentioned above, I developed the solution **Easy to Undersatnd** and **Production-Ready**.
 Here is some improvments to turn this solution **Ready to Market**:  
-1. **Persist data using a database**: To make the solution simple and production ready, I avoid persist data. at this solution the data is stored in memory. To make the data persistent across restarts and usable in a production environment, integrate a relational database like **PostgreSQL**, **MySQL**, or NoSQLs Likes **MongoDB**. to do that, I proposed using **GORM**(ORM for GO). Integrate GORM to interact with the database more easily. This allows you to define relationships, run migrations, and handle CRUD operations seamlessly. it is so easy, Define models with GORM, Replace in-memory operations with GORM database queries and Implement migrations using [text](db.AutoMigrate(&models.Tag{}, &models.Media{})) for example, we can store media in database:
+1. **Persist data using a database**: To make the solution simple and production ready, I avoid persist data. at this solution the data is stored in memory. To make the data persistent across restarts and usable in a production environment, integrate a relational database like **PostgreSQL**, **MySQL**, or NoSQLs Likes **MongoDB**. to do that, I proposed using **GORM**(ORM for GO). Integrate GORM to interact with the database more easily. This allows you to define relationships, run migrations, and handle CRUD operations seamlessly. it is so easy, Define models with GORM, Replace in-memory operations with GORM database queries and Implement migrations using `db.AutoMigrate(&models.Tag{}, &models.Media{})` for example, we can store media in database:
 
 ```go
 func CreateMedia(c *gin.Context) {
@@ -160,7 +160,7 @@ if err != nil {
 And do not forget **Rate Limiting** strategies, one of good libraries is **golang.org/x/time/rate** or using **Nginx** as reverse proxy.
 3. **Use background processing for file uploads** : If you are dealing with large media files, consider offloading file processing (e.g., storing media files, generating thumbnails) to background jobs. I can use **Go channels**, **goroutines**, or utelizing distributed messaging system like **Kafka** or **RabbitMQ** . also use a dedicated background job system **Goraft/Work & Redis** can be a solution.
 
-4. **Add some extra helpful fuctionalities**: Add **update** [text](e.g. : PUT /tags/:id) and **delete** [text](e.g. : DELETE /tags/:id) functionalities for tags and media can extend the usefulness. something like these functions:
+4. **Add some extra helpful fuctionalities**: Add **update** `e.g. : PUT /tags/:id` and **delete** `e.g. : DELETE /tags/:id` functionalities for tags and media can extend the usefulness. something like these functions:
 ```go
 func UpdateTag(c *gin.Context) {
     id := c.Param("id")
@@ -190,7 +190,7 @@ func DeleteTag(c *gin.Context) {
 }
 ```
 
-for listing endpoints ([text](GET /tags) & [text](GET /media)), we can add **Pagination** and **Filtering**, for example:
+for listing endpoints `GET /tags` & `GET /media`, we can add **Pagination** and **Filtering**, for example:
 
 ```go
 func ListTags(c *gin.Context) {
@@ -204,7 +204,7 @@ func ListTags(c *gin.Context) {
     c.JSON(http.StatusOK, tags)
 }
 ```
-Also we can perform **Filtering Media by Multiple Tags** ([text](GET /media?tags=tag1,tag2)), easily modify the search functionality to allow filtering by multiple tags, using SQL [text](IN) queries.
+Also we can perform **Filtering Media by Multiple Tags** (`GET /media?tags=tag1,tag2`), easily modify the search functionality to allow filtering by multiple tags, using SQL `IN` queries.
 
 4. **Cache frequently accessed data**: If your media list or search grows, add caching to reduce the load on your database. You can use Redis or an in-memory caching system like Go's **sync.Map**. Example using **Redis**:
 ```go
