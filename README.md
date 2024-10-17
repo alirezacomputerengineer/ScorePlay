@@ -13,21 +13,24 @@ Based on Technical Task needs, This service exposes a REST API to perform 4 main
 ## Solution Design
 
 Based on assumptions above, I proposed architecture follows a common and effective pattern for organizing a Go-based web application using the Gin framework. This architecture is centered around the **Separation of Concerns (SoC)** principle, which improves modularity, readability, and maintainability. Each folder in this structure has a specific responsibility:
-
-    - `controllers/`: This handles the application logic, responding to HTTP requests, processing them, and sending responses back to the client.
-    - `models/`: This defines the application's data structures (e.g., `Tag` and `Media`) and serves as the link between business logic and data layer.
-    - `routes/`: This centralizes route definitions, making it easier to configure and expand routing as the application grows.
-    - `main.go`: Acts as the entry point for the application. It sets up the server, routes, and middleware (like Swagger) in one place without cluttering it with the business logic or models.
+- `controllers/`: This handles the application logic, responding to HTTP requests, processing them, and sending responses back to the client.
+- `models/`: This defines the application's data structures (e.g., `Tag` and `Media`) and serves as the link between business logic and data layer.
+- `routes/`: This centralizes route definitions, making it easier to configure and expand routing as the application grows.
+- `main.go`: Acts as the entry point for the application. It sets up the server, routes, and middleware (like Swagger) in one place without cluttering it with the business logic or models.
 
 **Advantages of this Architecture** are:
 
 ***a. Modularity***: Each part of your application is decoupled from others. The `controllers` focus only on handling requests, `models` are responsible for the data representation, and `routes` are for wiring things up. This makes it easier to maintain, test, and scale the application. If you need to modify or add a new feature (like adding a new API), you know exactly where to look and modify, without worrying about unintended side effects in other parts of the system.
+
 ***b. Readability and Maintainability***: By organizing the application into clear directories (`controllers/`, `models/`, and `routes/`), developers unfamiliar with the project can easily understand its structure. The application is easy to navigate and find what you're looking for, which becomes crucial as the codebase grows.
+
 ***c. Scalability***: As your project grows and you add more controllers, models, and routes, this structure naturally accommodates expansion. Each new feature can be implemented by adding a new controller and route. You don't need to refactor the entire codebase for adding new features.
+
 ***d. Ease of Testing***: Each layer of the application can be tested independently, using either *Unit tests* or *Integreation Test*.
+
 ***e. Extensibility***: As the API grows, this architecture can be extended to support additional concerns like *Middlewares*(Custom middleware can be added in the `main.go` or in separate files to handle cross-cutting concerns, somethings like logging, authentication, rate-limiting, etc.) or *Versioning*(API versioning can be easily introduced by organizing controllers/routes into subdirectories like `v1/`, `v2/`, etc.)
 
-Also because of Independent components, Loose coupling and Easy integration the proposed struct will work well in ***MicroServices Arcitecture***.
+Also because of ***Independent components***, ***Loose coupling*** and ***Easy integration*** the proposed structure will work well in **MicroServices Arcitecture**.
 
 ### API Structure
 
@@ -72,7 +75,7 @@ Also for Swagger document generation:
 swag init
 ```
 
-Visit [text](http://localhost:8080/swagger/index.html) in your browser to see the Swagger-generated API documentation.
+Visit [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html) in your browser to see the Swagger-generated API documentation.
 
 
 Run the app using this:
