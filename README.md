@@ -8,7 +8,8 @@ Based on Technical Task needs, This service exposes a REST API to perform 4 main
 
 - **Simplicity**: I avoid complex solution, to make solution easy to undersatnd and usable for all, I design my proposed solution simple. code is totally easy to understand, commented and components are well-named. also using swagger make it more documentable.
 - **Generality**: I used **Gin** framework to develop the solution, I could develop this REST API with out extra package, which make the solution a bit complex, or using **Echo** or **Fiber** framework instead of **Gin**, but **Gin** is more global and at this simple context, there is not meaningful difference between frameworks.
-- **Productivity**: As mentioned in Technical Task description, application must be production-ready, therefor I avoid persist data using Databases or using Docker, it is simple to run and test. in **Improvements** section I proposed some improvements for market ready product.
+- **Productivity**: As mentioned in Technical Task description, application must be production-ready, therefor I avoid persist data using Databases or using Docker, it is simple to run and test. in [Improvements](#future-improvements) section I proposed some improvements for market ready product.
+- **Security**: As we are developing API which uploads something on the server, it is very important to care about security. I suggested some security practices in section 2 of [Improvements](#future-improvements), but to keep the code simple, I did not add them to the code base.
 
 ## Solution Design
 
@@ -175,6 +176,68 @@ if err != nil {
     return
 }
 ```
+As we are uploading something, I think important to check file type (for example image only for media endpoint) and size of file. we can check this file properties as below `FileValidator` middleware:
+```go
+package main
+
+import (
+    "github.com/gin-gonic/gin"
+    "mime/multipart"
+    "net/http"
+    "strings"
+)
+
+func FileValidator() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        file, _, err := c.Request.FormFile("file")
+        if err != nil {
+            c.JSON(http.StatusBadRequest, gin.H{"error": "File upload error"})
+            c.Abort()
+            return
+        }
+        
+        // Check file size (max 10 MB)
+        const MaxFileSize = 10 << 20 // 10 MB
+        if file.Size > MaxFileSize {
+            c.JSON(http.StatusRequestEntityTooLarge, gin.H{"error": "File size exceeds 10 MB"})
+            c.Abort()
+            return
+        }
+
+        // Check file type (image/jpg, gif, png)
+        fileType := c.Request.Header.Get("Content-Type")
+        if !isValidFileType(fileType) {
+            c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid file type"})
+            c.Abort()
+            return
+        }
+
+        c.Next() // File is valid
+    }
+}
+
+// Helper function to validate file type
+func isValidFileType(fileType string) bool {
+    validTypes := []string{"image/jpeg", "image/jpg", "image/gif", "image/png"}
+    for _, valid := range validTypes {
+        if strings.EqualFold(fileType, valid) {
+            return true
+        }
+    }
+    return false
+}
+
+//Main function with FileValidator middleware
+func main() {
+    r := gin.Default()
+
+    r.POST("/media", FileValidator(), controllers.CreateMedia) // Example route for file upload
+
+    r.Run() // listen and serve on 0.0.0.0:8080
+}
+
+``` 
+
 And do not forget **Rate Limiting** strategies, one of good libraries is **golang.org/x/time/rate** or using **Nginx** as reverse proxy.
 
 3. **Use background processing for file uploads** : If you are dealing with large media files, consider offloading file processing (e.g., storing media files, generating thumbnails) to background jobs. I can use **Go channels**, **goroutines**, or utelizing distributed messaging system like **Kafka** or **RabbitMQ** . also use a dedicated background job system **Goraft/Work & Redis** can be a solution.
