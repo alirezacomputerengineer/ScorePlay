@@ -14,11 +14,11 @@ Based on Technical Task needs, This service exposes a REST API to perform 4 main
 ## Solution Design
 
 Based on assumptions above, I proposed architecture follows a common and effective pattern for organizing a Go-based web application using the Gin framework. This architecture is centered around the **Separation of Concerns (SoC)** principle, which improves modularity, readability, and maintainability. Each folder in this structure has a specific responsibility:
+- `docs/`: contains swagger files, required for API documents genaration.
 - `controllers/`: This handles the application logic, responding to HTTP requests, processing them, and sending responses back to the client.
 - `models/`: This defines the application's data structures (e.g., `Tag` and `Media`) and serves as the link between business logic and data layer.
 - `routes/`: This centralizes route definitions, making it easier to configure and expand routing as the application grows.
 - `main.go`: Acts as the entry point for the application. It sets up the server, routes, and middleware (like Swagger) in one place without cluttering it with the business logic or models.
-- `docs/`: contains swagger files, required for API documents genaration.
 
 **Advantages of this Architecture** are:
 
