@@ -65,6 +65,7 @@ Download or clone code base(I named the project `myapp`), navigate to the main f
 ```bash
 go mod init myapp
 go get -u github.com/gin-gonic/gin
+go get -u github.com/google/uuid
 go get -u github.com/swaggo/gin-swagger
 go get -u github.com/swaggo/files
 go get -u github.com/swaggo/swag/cmd/swag
@@ -74,6 +75,10 @@ Also for Swagger document generation:
 
 ```bash
 swag init
+```
+Install it if you did not before:
+```bash
+go install github.com/swaggo/swag/cmd/swag@latest
 ```
 
 Visit [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html) in your browser to see the Swagger-generated API documentation.
