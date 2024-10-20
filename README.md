@@ -18,6 +18,7 @@ Based on assumptions above, I proposed architecture follows a common and effecti
 - `models/`: This defines the application's data structures (e.g., `Tag` and `Media`) and serves as the link between business logic and data layer.
 - `routes/`: This centralizes route definitions, making it easier to configure and expand routing as the application grows.
 - `main.go`: Acts as the entry point for the application. It sets up the server, routes, and middleware (like Swagger) in one place without cluttering it with the business logic or models.
+- `docs`: contains swagger files, required for API documents genaration.
 
 **Advantages of this Architecture** are:
 
@@ -49,8 +50,11 @@ myapp/
 │       tag.go
 │       media.go
 └───routes/
-        routes.go
-
+│       routes.go
+└───docs/
+        docs.go
+        swagger.json
+        swagger.yaml
 ``` 
 
 ### Dependencies
