@@ -288,7 +288,7 @@ func ListTags(c *gin.Context) {
 ```
 Also we can perform **Filtering Media by Multiple Tags** (`GET /media?tags=tag1,tag2`), easily modify the search functionality to allow filtering by multiple tags, using SQL `IN` queries.
 
-4. **Cache frequently accessed data**: If your media list or search grows, add caching to reduce the load on your database. You can use Redis or an in-memory caching system like Go's [sync.Map](https://pkg.go.dev/sync). Example using [Redis](https://redis.io/):
+5. **Cache frequently accessed data**: If your media list or search grows, add caching to reduce the load on your database. You can use Redis or an in-memory caching system like Go's [sync.Map](https://pkg.go.dev/sync). Example using [Redis](https://redis.io/):
 ```go
 import "github.com/go-redis/redis/v8"
 
@@ -320,11 +320,11 @@ func SearchMedia(c *gin.Context) {
 }
 ```
 
-5. **Add structured logging for better monitoring and debugging**: To monitor and debug the application more efficient, we can implement structured logging. we can use logging libraries like [logrus](https://github.com/sirupsen/logrus) or [zap](https://github.com/uber-go/zap) to add logs to your API:
+6. **Add structured logging for better monitoring and debugging**: To monitor and debug the application more efficient, we can implement structured logging. we can use logging libraries like [logrus](https://github.com/sirupsen/logrus) or [zap](https://github.com/uber-go/zap) to add logs to your API:
 ```go
 import log "github.com/sirupsen/logrus"
 
 log.Info("Creating media record")
 log.Error("Failed to upload file")
 ```
-6. **Deploy your API with Docker and Kubernetes for scalability**: and last but not the least, Once our API is feature-complete and secure, consider deploying it using [Docker](https://www.docker.com/) and [Kubernetes](https://kubernetes.io/) for scalability. Use a [CI/CD](https://www.redhat.com/en/topics/devops/what-is-ci-cd) pipeline for continuous deployment and testing.
+7. **Deploy your API with Docker and Kubernetes for scalability**: and last but not the least, Once our API is feature-complete and secure, consider deploying it using [Docker](https://www.docker.com/) and [Kubernetes](https://kubernetes.io/) for scalability. Use a [CI/CD](https://www.redhat.com/en/topics/devops/what-is-ci-cd) pipeline for continuous deployment and testing.
