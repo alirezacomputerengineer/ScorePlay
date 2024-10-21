@@ -1,14 +1,12 @@
 package main
 
 import (
-	"myapp/controllers"
 	"myapp/routes"
 	"github.com/gin-gonic/gin"
 	_ "myapp/docs"
-	"github.com/swaggo/gin-swagger"
 	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
-
 // @title Media and Tag API
 // @version 1.0
 // @description REST API for creating and searching tags and media items
