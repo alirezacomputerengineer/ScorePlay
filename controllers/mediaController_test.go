@@ -2,14 +2,15 @@ package controllers
 
 import (
 	"bytes"
+	"encoding/json"
 	"mime/multipart"
+	"myapp/models"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"path/filepath"
 	"testing"
-	"encoding/json"
-	"myapp/models"
+
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
@@ -80,7 +81,7 @@ func TestSearchMedia(t *testing.T) {
 	}
 
 	// Test search by tag
-	req := httptest.NewRequest("GET", "/media?tag=Real Madrid", nil)
+	req := httptest.NewRequest("GET", "/media?tag=Real%20Madrid", nil)
 	w := httptest.NewRecorder()
 
 	r.ServeHTTP(w, req)
