@@ -1,0 +1,123 @@
+definitions:
+  models.Media:
+    properties:
+      fileUrl:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+    required:
+    - name
+    - tags
+    type: object
+  models.Tag:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+    required:
+    - name
+    type: object
+info:
+  contact: {}
+  description: REST API for creating and searching tags and media items
+  title: Media and Tag API
+  version: "1.0"
+paths:
+  /media:
+    get:
+      description: Search media items by tag
+      parameters:
+      - description: Tag ID
+        in: query
+        name: tag
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Media'
+            type: array
+      summary: Search media by tag
+      tags:
+      - media
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload and create a media with tags
+      parameters:
+      - description: Media Name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - collectionFormat: csv
+        description: Tags
+        in: formData
+        items:
+          type: string
+        name: tags
+        required: true
+        type: array
+      - description: File
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Media'
+      summary: Create media
+      tags:
+      - media
+  /tags:
+    get:
+      description: Get all tags
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Tag'
+            type: array
+      summary: List all tags
+      tags:
+      - tags
+    post:
+      consumes:
+      - application/json
+      description: Create a new tag
+      parameters:
+      - description: Tag
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/models.Tag'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Tag'
+      summary: Create a tag
+      tags:
+      - tags
+swagger: "2.0"
