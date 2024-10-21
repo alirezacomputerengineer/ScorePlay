@@ -2,9 +2,8 @@ package controllers
 
 import (
 	"myapp/models"
-	"github.com/gin-gonic/gin"
 	"net/http"
-	"os"
+	"github.com/gin-gonic/gin"
 	"path/filepath"
 	"github.com/google/uuid"
 )
@@ -38,9 +37,9 @@ func CreateMedia(c *gin.Context) {
 	}
 
 	newMedia := models.Media{
-		ID:     uuid.New().String(),
-		Name:   name,
-		Tags:   tags,
+		ID:      uuid.New().String(),
+		Name:    name,
+		Tags:    tags,
 		FileUrl: "/uploads/" + file.Filename,
 	}
 
