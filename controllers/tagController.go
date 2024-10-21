@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"myapp/models"
-	"github.com/gin-gonic/gin"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
